@@ -1,0 +1,42 @@
+{% extends 'admin-panel.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %}Editar {{usuario}} {% endblock %}
+
+{% block panelcontent %}
+
+<div class="container mx-auto py-6">
+    <h2 class="text-2xl font-semibold mb-6 text-center">Editar datos de {{ usuario.first_name }} {{ usuario.last_name }}</h2>
+    
+    <form method="post" class="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto">
+        {% csrf_token %}
+        
+        <!-- Campo para el nombre -->
+        <div class="mb-4">
+            <label for="id_first_name" class="block text-sm font-medium text-gray-700">Nombre</label>
+            <input type="text" name="first_name" value="{{ usuario.first_name }}" class="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" id="id_first_name" required>
+        </div>
+
+        <!-- Campo para el apellido -->
+        <div class="mb-4">
+            <label for="id_last_name" class="block text-sm font-medium text-gray-700">Apellido</label>
+            <input type="text" name="last_name" value="{{ usuario.last_name }}" class="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" id="id_last_name" required>
+        </div>
+
+        <!-- Campo para el email -->
+        <div class="mb-4">
+            <label for="id_email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+            <input type="email" name="email" value="{{ usuario.email }}" class="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" id="id_email" required>
+        </div>
+
+        <!-- Botón de guardar -->
+        <div class="mt-6">
+            <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Guardar cambios
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% load static tailwind_tags %}
+
+{%  load static %}
+
+<!-- Nombrando urls -->
+{% url 'home' as home_url %}
+{% url 'login' as log_in_url %}
+{% url 'signup' as sign_up_url %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% tailwind_css %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Estilos -->
+
+    <!-- Home App -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/background.css' %}">
+
+    <!-- Bloques del head -->
+    {% block head_login %}{% endblock head_login %}
+
+        
+
+    <!-- Fuentes -->
+
+    <!-- Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Rubik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+    <title>
+        {% block title %}
+        Bienvenido a Sendora
+        {% endblock title %}
+        
+    </title>
+</head>
+<body class="relative  poppinsMedium  
+                            {% if 'home' in request.path %} 
+                            bg-gradient-to-r from-orange-300 to-blue-300
+                            {% else %}
+                            bg-red-white  {% endif %} ">
+                         
+    <div class="relative   lg:h-[100%] px-[20px] lg:p-[0px]">
+                
+     
+                <nav class="max-w-[1200px] mx-auto pt-[15px] flex justify-between items-center" >
+
+                        
+                        {% if request.path == home_url %}
+                        <div class="flex gap-[5px] items-center select-none">
+                            <img src="{% static 'img/my-coin.png' %}" alt="" width="40px" height="40px">
+                            <h2 class="font-bold text-2xl">Sendora</h2>
+                        </div>
+                        {% endif %}
+
+                        
+                        {% if request.path == log_in_url or request.path == sign_up_url %}
+                            <a href="{% url 'home' %}" class="text-white flex gap-[10px] bg-gray-800 py-[10px] px-[20px] rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                                <img src="{% static 'img/arrow-left-from-line.svg' %}" alt="arrow-left-from-line" width="25" height="25">
+                                <span>Volver a inicio</span>
+                            </a>
+                        {% endif %}
+                            
+                        
+                        
+                    
+                    {% if request.path == sign_up_url or request.path == log_in_url %}
+
+                    {% else %}
+                        <a href=" {% url 'signup' %}" class=" flex items-center gap-[10px] bg-orange-400 px-[20px] py-[10px] text-white rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                            <span class="select-none">Crear cuenta</span>
+                            <img src="{% static 'img/register.svg' %}" alt="register" width="25px" height="25px" >
+                        </a>
+                    {% endif %}
+                        
+                    </nav>
+        
+            {% block content %}
+                <!-- Content -->
+            {% endblock content %}
+          
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,262 @@
+{% extends 'left-sidebar.html' %}
+
+{% load  static %}
+
+{% load humanize %}
+
+
+
+{% block sidebar %}
+    
+    <!-- Seccion entera -->
+    <div class="flex gap-[20px] justify-between h-[100%] ">
+
+        <!-- Dashboard -->
+        <div class=" flex-1">
+
+            <div class="flex flex-col gap-y-[20px] pt-3">
+                <!-- Saludo -->
+                <div >
+                    <h1 class="text-3xl font-bold">Hola, <span class="text-orange-400">{{ user.first_name }}</span></h1>
+                </div>
+        
+                <div class="flex gap-[5px]">
+                    
+                    
+                    <div class="flex-1 flex flex-col justify-between shadow-sm border rounded-lg p-4 bg-violet-100">
+                        <!-- Primera parte -->
+                        <div class="flex flex-col gap-6 mb-4">
+                            <!-- 1. Gráfico (comentado) -->
+                            <!--
+                            <div class="flex items-center">
+                                {% include 'components/graphic.html' %}
+                            </div>
+                            -->
+                            
+                            <!-- 2. Datos -->
+                            <div class="flex flex-col gap-[10px]">
+                                <h4 class="text-sm text-gray-600">Cuenta Sendora</h4>
+                               
+                                
+                                <div class="flex  items-center gap-[10px]">
+                                    <p class="text-xs">Monto total:</p>
+                                    <h3 class="font-bold text-2xl text-orange-400">${{ cuenta_sendora_saldo|intcomma }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Segunda parte (botón) -->
+                        <div class="mt-auto flex justify-between gap-[5px]">
+                            <a href="{% url 'ingresar_dinero' %}" class="flex-1 flex items-center justify-center gap-2 bg-orange-300 py-2 px-4 text-white rounded-lg text-sm transform transition-all duration-300 hover:scale-105">
+                                <img src="{% static 'img/add-bank.svg' %}" alt="Añadir cuenta" width="20" height="20">
+                                <span class="whitespace-nowrap text-[12px]">Ingresar</span>
+                            </a>
+                            <a href="{% url 'maketransaction' %}" class="flex-1 flex items-center justify-center gap-2 bg-orange-300 py-2 px-4 text-white rounded-lg text-sm transform transition-all duration-300 hover:scale-105">
+                                <img src="{% static 'img/add-bank.svg' %}" alt="Añadir cuenta" width="20" height="20">
+                                <span class="text-[12px]">Transferir</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+
+                    <div class="flex-1 flex flex-col justify-between shadow-sm border rounded-lg p-4 bg-violet-100">
+                        <!-- Primera parte -->
+                        <div class="flex flex-col gap-6 mb-4">
+                            <!-- 1. Gráfico (comentado) -->
+                            <!--
+                            <div class="flex items-center">
+                                {% include 'components/graphic.html' %}
+                            </div>
+                            -->
+                            
+                            <!-- 2. Datos -->
+                            <div class="flex flex-col gap-2">
+                                {% if cantidad_cuentas_asociadas == 0 %}
+                                    <h4 class="text-sm text-gray-600">Sin cuentas bancarias asociadas </h4>
+                                {% elif cantidad_cuentas_asociadas == 1 %}
+                                    <h4 class="text-gray-800">
+                                        <span class="font-bold  text-gray-500">{{ cantidad_cuentas_asociadas }}</span> cuenta bancaria asociada
+                                    </h4>
+                                {% else %}
+                                    <h4 class="text-gray-800">
+                                        <span class="font-bold  text-gray-500">{{ cantidad_cuentas_asociadas }}</span> cuentas bancarias asociadas
+                                    </h4>
+                                {% endif %}
+                                
+                                <div class="flex  items-center gap-[10px]">
+                                    <p class="text-xs">Monto total:</p>
+                                    <h3 class="font-bold text-2xl text-blue-500">${{ balance_total|intcomma }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Segunda parte (botón) -->
+                        <div class="mt-auto flex justify-between gap-[5px]">
+                            <a href="{% url 'addbankaccount' %}" class="flex-1 flex items-center justify-center gap-2 bg-blue-300 py-2 px-4 text-white rounded-lg text-sm transform transition-all duration-300 hover:scale-105">
+                                <img src="{% static 'img/add-bank.svg' %}" alt="Añadir cuenta" width="20" height="20">
+                                <span class="whitespace-nowrap text-[12px]">Añadir cuenta</span>
+                            </a>
+                            <a href=" {% url 'accounts' %}" class="flex-1 flex items-center justify-center gap-2 bg-blue-300 py-2 px-4 text-white rounded-lg text-sm transform transition-all duration-300 hover:scale-105">
+                                <img src="{% static 'img/add-bank.svg' %}" alt="Añadir cuenta" width="20" height="20">
+                                <span class="text-[12px]">Desvincular</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                </div>
+
+    <!-- Tabla de transacciones recientes -->
+    <div class="overflow-x-auto flex flex-col h-[325px] bg-gray-100 pb-[50px] overflow-y-scroll hideScrollbar rounded-lg shadow-md">
+        <!-- Título fijo -->
+        <div class="flex items-center justify-between sticky top-0 bg-orange-300 py-[10px] px-[10px] border-b border-gray-300 z-10">
+            <h2 class="text-center text-[14px] font-semibold text-gray-800">Transacciones Recientes</h2>
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <button class="flex items-center gap-[10px]">
+                    <img src="{% static 'img/trash.svg' %}" alt="" width="20px" height="20px">
+                </button>
+            </form>
+        </div>
+        <table class="min-w-full border-collapse rounded-lg">
+            <!-- Encabezados de la tabla fijos -->
+            <thead class="sticky top-[40px] bg-amber-200 z-10">
+                <tr class="text-gray-900">
+                    <th class="px-4 py-2 whitespace-nowrap font-normal text-[12px] select-none rounded-tl-lg">Fila</th>
+                    <th class="px-4 py-2 whitespace-nowrap font-normal text-[12px] select-none">R/D</th>
+                    <th class="px-4 py-2 whitespace-nowrap font-normal text-[12px] select-none">Monto</th>
+                    <th class="px-4 py-2 whitespace-nowrap font-normal text-[12px] select-none">Fecha</th>
+                    <th class="px-4 py-2 whitespace-nowrap font-normal text-[12px] select-none rounded-tr-lg">Motivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if todas_transacciones %}
+                    {% for t in todas_transacciones|slice:":10" %}
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="px-4 py-3 text-center text-[12px] whitespace-nowrap">{{ forloop.counter }}</td>
+                            <td class="flex items-center gap-3 px-4 py-3 text-center text-[12px] whitespace-nowrap">
+                                <div class="border rounded-full w-[45px] h-[45px] overflow-hidden flex items-center justify-center shadow-sm">
+                                    <img src="{% if t.destinatario == request.user %} {{t.remitente.profiles.foto_perfil.url}} {% else%} {{ t.destinatario.profiles.foto_perfil.url }} {% endif %}" 
+                                        alt="Avatar" class="rounded-full object-cover w-[45px] h-[45px]">
+                                </div>
+                                <span class="flex flex-col mx-auto minx-w-[50%] items-center">
+                                    {% if t.destinatario == request.user %}
+                                        <span class="">{{ t.remitente.first_name }}</span>
+                                        <span class="">{{ t.remitente.last_name }}</span>
+                                    {% elif t.remitente == request.user %}
+                                        <span class="">{{ t.destinatario.first_name }}</span>
+                                        <span class="">{{ t.destinatario.last_name }}</span>
+                                    {% endif %}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                {% if t.remitente == request.user %}
+                                    <div class="text-red-500 bg-red-100 p-2 rounded-lg text-sm w-full">-<span>{{ t.monto|intcomma }}</span></div>
+                                {% else %}
+                                    <div class="text-green-500 bg-green-100 p-2 rounded-lg text-sm w-full">+<span>{{ t.monto|intcomma }}</span></div>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-3 text-[12px] text-center">{{ t.fecha_y_hora }}</td>
+                            <td class="px-4 py-3 text-center text-[12px]">{{ t.motivo }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class=" h-[225px] w-full text-center rounded-b-lg text-sm text-gray-700">
+                            No se registraron transacciones aún
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+
+            
+                
+            </div>
+        </div>
+
+        <!-- Right sidebar -->
+        <div class="h-[100%]  bg-violet-50 shadow-gray-300   shadow-xl border w-[350px] rounded-xl overflow-y-scroll hideScrollbar">
+
+                <!-- Portada -->
+                <div class=" h-28 w-[100%] bg-gradient-to-r from-blue-300 to-orange-300">
+                    
+                </div>
+
+                <!-- Foto de perfil -->
+                <div class="w-fit border-[2px] border-gray-200  rounded-[50%] overflow-hidden relative bottom-[10%] left-[33.33%]  transform transition-all duration-300 hover:rotate-6 ">
+                    <img src="{{ perfil.foto_perfil.url }}" alt="user-photo" width="100px" height="100px">
+                </div>
+
+
+                <!-- Nombre completo y correo electronico -->
+                <div class="relative bottom-[50px] text-center">
+                        <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                        <p class="text-gray-500 text-sm">{{ user.email }}</p>
+                </div>
+
+                <!-- El resto de la sidebar, es decir, del titulo 'Mis bancos' para abajo-->
+                <div class="relative bottom-[40px]  h-32">
+
+                    
+                    <h3 class="text-[16px] text-center pt-[25px]">Tarjeta virtual Sendora</h3>
+                    <h3 class="text-[12px] text-center pt-[25px]">Frente</h3>
+
+                    <!-- Tarjeta de Sendora (FRENTE) -->
+                        <div class="p-[15px] ">
+                            <div class="relative flex justify-between  w-[100%] h-[175px] bg-gray-800 rounded-xl text-white overflow-hidden transform transition-all duration-300">
+                              
+                               
+                                <span class="absolute top-0 right-0 left-0   opacity-10 text-6xl font-extrabold  w-fit mx-auto rotate-90">SEN <br> DO <br>  RA</span>
+                                <!-- Primera mitad azul marino -->
+                               <div class="flex-1 flex flex-col justify-between  h-[100%] pt-[20px] pb-[20px] pl-[20px] ">
+                                    <img src="{% static 'img/mastercard.png' %}" alt=""width="45px" height="45px">
+
+                                    <div class="flex flex-col gap-[25px] ">
+                                            <div class="flex flex-col  items-left text-sm">
+                                                <p>01/26</p>
+                                                <p class="whitespace-nowrap ">{{ user.first_name }} {{ user.last_name }}</p>
+                                            </div>
+                                            <p class="flex justify-between items-center font-light text-[12px]">
+                                                <span>5464</span>
+                                                <span>5678</span>
+                                                <span>9876</span>
+                                                <span>6784</span>
+                                            </p>
+                                    </div>
+                               </div>
+
+                               <!-- Segunda mitad --> 
+                               <div class="flex flex-col justify-between pb-[20px] pt-[25px] items-center px-[20px] " >
+                                    <img src="{% static 'img/pay-pass.png' %}" alt="" class="object-contain">
+                                    <div class="flex items-center gap-[4px]  justify-center ">
+                                        <img src="{%  static 'img/dollar.svg' %}" alt="logo-icon" width="25px" height="25px">
+                                        <h2 class="font-bold text-md">Sendora</h2>
+                                     </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-[12px] text-center pt-[15px]">Dorso</h3>
+                        <!-- Tarjeta de Sendora (DORSO) -->
+                        <div class="p-[15px] ">
+                            <div class="relative flex flex-col justify-between items-start gap-[50px] w-[100%] h-[175px] bg-gray-800 rounded-xl text-white overflow-hidden transform transition-all duration-300">
+                                <span class="absolute top-0 right-0 left-0   opacity-10 text-6xl font-extrabold  w-fit mx-auto rotate-90">SEN <br> DO <br>  RA</span>
+                                <div class="h-10 w-[100%] bg-gray-950 relative z-50 top-5"> </div>
+                                <p class="text-[13px] text-end mr-10 mb-5 bg-gray-500 text-gray-900 w-[150px] rounded-r-lg py-[5px] pr-[20px] font-semibold italic">985</p>
+                               
+                            </div>
+                        </div>
+                    <!-- Gastos -->
+                    
+                </div>
+
+
+        </div>
+    </div>
+
+    
+    
+{% endblock sidebar %}
+    

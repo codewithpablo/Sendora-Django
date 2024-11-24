@@ -1,0 +1,76 @@
+{% extends 'admin-panel.html' %}
+
+{% block title %}Movimientos del Usuario {{ pk }}{% endblock %}
+
+{% block panelcontent %}
+<div class="container mx-auto py-6">
+
+    <h2 class="text-2xl font-semibold text-center py-10 mx-auto ">Movimientos de {{ usuario }}</h2>
+    <div class="flex space-x-6">
+        <!-- Tabla de Transacciones -->
+        <div class="w-1/2">
+            <h2 class=" font-semibold mb-4 text-center">Transacciones</h2>
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 text-left">Fecha</th>
+                        <th class="px-4 py-2 text-left">Monto</th>
+                        <th class="px-4 py-2 text-left">Remitente</th>
+                        <th class="px-4 py-2 text-left">Destinatario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaccion in transacciones %}
+                    <tr>
+                        <td class="px-4 py-2 border-b text-[12px] whitespace-nowrap">{{ transaccion.fecha_y_hora }}</td>
+                        <td class="px-4 py-2 border-b text-[12px]">
+                            
+                            {% if transaccion.remitente.username == usuario.username %}
+                                <span class="text-red-400 font-bold rounded-lg">- {{ transaccion.monto }}</span>
+                            {% else %}
+                                <span class="text-green-400 font-bold rounded-lg">+ {{ transaccion.monto }}</span>
+                            {% endif %}
+                                
+                        
+                        </td>
+                        <td class="px-4 py-2 border-b text-[12px]">{{ transaccion.remitente.username }}</td>
+                        <td class="px-4 py-2 border-b text-[12px]">{{ transaccion.destinatario.username }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="px-4 py-2 text-center">No hay transacciones</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tabla de Ingresos -->
+        <div class="w-1/2">
+            <h2 class=" font-semibold mb-4 text-center">Ingresos</h2>
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 text-left">Fecha</th>
+                        <th class="px-4 py-2 text-left">Monto</th>
+                        <th class="px-4 py-2 text-left">Origen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ingreso in ingresos %}
+                    <tr>
+                        <td class="px-4 py-2 border-b text-[12px]">{{ ingreso.fecha_y_hora }}</td>
+                        <td class="px-4 py-2 border-b text-[12px]">{{ ingreso.monto }}</td>
+                        <td class="px-4 py-2 border-b text-[12px]">{{ ingreso.origen }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="px-4 py-2 text-center">No hay ingresos</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

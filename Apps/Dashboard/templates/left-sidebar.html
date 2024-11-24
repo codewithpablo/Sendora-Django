@@ -1,0 +1,148 @@
+{% load static  %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Inicio{% endblock %}</title>
+
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="{% static 'css/left-sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dotted.css' %}">
+
+    <!-- Fuentes -->
+
+     <!-- Poppins -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
+</head>
+<body class="h-[calc(100vh-40px)] m-5 poppinsMedium">
+        <div class="flex h-[100%]">
+
+            <!-- Left sidebar -->
+            <div class="flex flex-col justify-between items-center w-[275px] border bg-violet-50 shadow-xl shadow-gray-300 p-[20px] rounded-[15px] overflow-hidden">
+
+                <!-- Logo -->
+                 <div class="flex items-center gap-[5px]  justify-center hover:rotate-3 transition-all duration-300">
+                    <img src="{% static 'img/my-coin.png' %}" alt="" width="40px" height="40px">
+                    <h2 class="font-bold text-2xl">Sendora</h2>
+                 </div>
+
+                 <!-- Links -->
+                 <ul class=" w-[100%] flex flex-col  gap-[10px]">
+                    <li class="">
+                        <a href="{% url 'dashboard' %} " 
+                        class="{% if 'dashboard' in request.path %}flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300 border bg-blue-200 py-[10px] rounded-lg
+                        {% else %}
+                        flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  py-[10px] rounded-lg border
+                        {% endif %}
+                        ">
+                            <img src="{% static 'img/home.svg' %}" alt="banks" width="25px" height="25px">
+                            <span  class="text-gray-500 text-[14px]">Inicio</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'accounts' %}" 
+                        class="{% if 'accounts' in request.path %}flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300 border bg-blue-200 py-[10px] rounded-lg
+                        {% else %}
+                        flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  py-[10px] rounded-lg border
+                        {% endif %}
+                        ">
+                            <img src="{% static 'img/banks.svg' %}" alt="banks" width="25px" height="25px">
+                            <span  class="text-gray-500 text-[14px]">Cuentas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'transactions' %}" 
+                        class="{% if 'transactions' in request.path %}flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  border bg-blue-200 py-[10px] rounded-lg
+                        {% else %}
+                        flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  py-[10px] rounded-lg border 
+                        {% endif %}
+                        ">
+                            <img src="{% static 'img/transactions.svg' %}" alt="banks" width="25px" height="25px">
+                            <span class="text-gray-500 text-[14px]">Transacciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'income' %}" 
+                        class="{% if 'income' in request.path %}flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  border bg-blue-200 py-[10px] rounded-lg
+                        {% else %}
+                        flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  py-[10px] rounded-lg border 
+                        {% endif %}
+                        ">
+                            <img src="{% static 'img/dollar-sign.svg' %}" alt="banks" width="25px" height="25px">
+                            <span class="text-gray-500 text-[14px]">Ingresos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'editprofile' %}" 
+                        class="{% if 'edit' in request.path %} flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  border bg-blue-200 py-[10px] rounded-lg
+                        {% else %}
+                        flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  py-[10px] rounded-lg border 
+                        {% endif %}
+                        ">
+                            <img src="{% static 'img/user.svg' %}" alt="banks" width="25px" height="25px">
+                            <span class="text-gray-500 text-[14px]">Perfil</span>
+                        </a>
+                    </li>
+                
+                 {% if usuario_es_administrador %}     
+                            
+                            <li>
+                                <a href="{% url 'lista_de_usuarios' %}" 
+                                class="{% if 'lista_de_usuarios' in request.path %} flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  border bg-blue-200 py-[10px] rounded-lg
+                                {% else %}
+                                flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  py-[10px] rounded-lg border 
+                                {% endif %}
+                                ">
+                                    <img src="{% static 'img/panel.svg' %}" alt="banks" width="25px" height="25px">
+                                    <span class="text-gray-500 text-[13px]">Panel</span>
+                                </a>
+                            </li>
+
+
+                    {% endif %}
+                 </ul>
+
+                 <!-- Footer -->
+                <footer class="flex justify-between items-center w-[100%]">
+
+                   <div class="flex items-center gap-[15px]">
+                        <!-- Imagen -->
+                        <div>
+                            <img src="{{ perfil.foto_perfil.url }}" alt="user-photo" width="50px" height="50px" class="rounded-[50%] transform hover:scale-110 transition-all duration-300">
+                        </div>
+
+                        <!-- Datos -->
+                        <div class="text-sm">
+                            <h3 class="font-bold">{{ user.first_name }} {{ user.last_name }}</h3>
+                            <p>{{ user.username }}</p>
+                        </div>
+                   </div>
+
+                    <!-- Boton de salir -->
+                    <a href="{% url 'logout' %}">
+                        <img src="{% static 'img/leave.svg' %}" alt="logout" width="25px" height="25px">
+                    </a>
+
+                </footer>
+            </div>
+
+            <div class=" flex-1 rounded-[15px] overflow-hidden  px-[30px] ">
+                {% block sidebar %}
+
+   
+                {% endblock sidebar %}
+            </div>
+        </div>
+
+        <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>

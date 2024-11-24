@@ -1,0 +1,128 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+    <div class="mx-auto max-w-[1200px] flex flex-col items-center gap-[10px]">
+
+        <!-- Contenedor principal donde apareccne diferentes secciones a medida que el usuario ve deslizando hacia abajo -->
+
+        <!-- 1. Home Page -->
+        <div class="flex ">
+                    <!-- Primera mitad -->
+                    <div class="flex-1 flex flex-col  ">
+                    
+                        <!-- Contenido de la primera mitad -->
+                    <div class=" lg:py-[150px] flex flex-col justify-center gap-[40px]   lg:gap-[20px] max-h-[550px] pl-[5px]">
+                        <h1 class="text-[45px]   text-center lg:text-left lg:text-6xl font-bold pt-[50px] lg:pt-[0px] poppinsMedium select-none text-gray-700">Tu aliado digital para gestionar tus movimientos </h1>
+                        <p class="text-gray-500 font-xl text-justify lg:text-left select-none">Nuestra plataforma te ofrece una solución integral, rápida y segura, diseñada para simplificar la manera en que manejas tus transacciones financieras. </p>
+                        <a href="{% url 'login'  %} " class="select-none text-white mx-auto lg:mx-[0px] flex items-start gap-[10px] bg-blue-500   py-[10px] p-[20px] w-fit rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                            <span >Ingresar</span>
+                            <img src="{% static 'img/login.svg' %}" alt="login" width="25px" height="25px" >
+                        </a>
+                    </div>
+                </div>
+                    
+                <!-- Segunda mitad -->
+                <div class=" flex-1 rounded-lg overflow-hidden  h-[500px]   hidden lg:flex lg:flex-col lg:items-center lg:justify-center card-container">
+
+                   
+                         
+                           
+
+                   <div class="flex flex-col">
+
+                                <!-- Tarjeta 1 -->
+                                 <div class="z-10 hover:rotate-6  p-[15px] w-[375px] transform transition-all duration-500 ">
+                        
+                        
+                                    <div class="relative flex justify-between  w-[100%] h-[200px] bg-amber-300   rounded-xl text-gray-700 overflow-hidden transform transition-all duration-300">
+                                        <span class="absolute top-0 right-0 left-0   opacity-10 text-6xl font-extrabold  w-fit mx-auto rotate-90">SEN <br> DO <br>  RA</span>
+                                        <!-- Primera mitad azul marino -->
+                                        <div class="flex-1 flex flex-col justify-between  h-[100%] pt-[20px] pb-[20px] pl-[20px] ">
+                                            <img src="{% static 'img/mastercard.png' %}" alt=""width="45px" height="45px">
+            
+                                            <div class="flex flex-col gap-[25px] ">
+                                                    <div class="flex flex-col  items-left text-sm">
+                                                        <p>MM/AA</p>
+                                                        <p class="whitespace-nowrap ">Nombre y apellido</p>
+                                                    </div>
+                                                    <p class="flex justify-between items-center font-light text-[12px]">
+                                                        <span>●●●●</span>
+                                                        <span>●●●●</span>
+                                                        <span>●●●●</span>
+                                                        <span>●●●●</span>
+                                                    </p>
+                                            </div>
+                                        </div>
+            
+                                        <!-- Segunda mitad --> 
+                                        <div class="flex flex-col justify-between pb-[20px] pt-[25px] items-center px-[20px] " >
+                                            <img src="{% static 'img/pay-pass.png' %}" alt="" class="object-contain">
+                                            <div class="flex items-center gap-[4px]  justify-center ">
+                                                <img src="{%  static 'img/dollar.svg' %}" alt="logo-icon" width="25px" height="25px">
+                                                <h2 class="font-bold text-md">Sendora</h2>
+                                                </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                        
+                                <!-- Tarjeta 2-->
+                                <div class="hover:rotate-6 transform transition-all duration-500    p-[15px] w-[375px]  ">
+                                    
+                                    
+                                    <div class=" transform transition-all duration-300 relative flex justify-between  w-[100%] h-[200px]  bg-blue-400  rounded-xl text-white overflow-hidden">
+                                        <span class="absolute top-0 right-0 left-0   opacity-10 text-6xl font-extrabold  w-fit mx-auto rotate-90">SEN <br> DO <br>  RA</span>
+                                        <!-- Primera mitad azul marino -->
+                                        <div class="flex-1 flex flex-col justify-between  h-[100%] pt-[20px] pb-[20px] pl-[20px] ">
+                                            <img src="{% static 'img/mastercard.png' %}" alt=""width="45px" height="45px">
+            
+                                            <div class="flex flex-col gap-[25px] ">
+                                                    <div class="flex flex-col  items-left text-sm">
+                                                        <p>MM/AA</p>
+                                                        <p class="whitespace-nowrap ">Nombre y apellido</p>
+                                                    </div>
+                                                    <p class="flex justify-between items-center font-light text-[12px]">
+                                                        <span>●●●●</span>
+                                                        <span>●●●●</span>
+                                                        <span>●●●●</span>
+                                                        <span>●●●●</span>
+                                                    </p>
+                                            </div>
+                                        </div>
+            
+                                        <!-- Segunda mitad --> 
+                                        <div class="flex flex-col justify-between pb-[20px] pt-[25px] items-center px-[20px] " >
+                                            <img src="{% static 'img/pay-pass.png' %}" alt="" class="object-contain">
+                                            <div class="flex items-center gap-[4px]  justify-center ">
+                                                <img src="{%  static 'img/dollar.svg' %}" alt="logo-icon" width="25px" height="25px">
+                                                <h2 class="font-bold text-md">Sendora</h2>
+                                                </div>
+                                    </div>
+                                    </div>
+                                </div>
+                   </div>
+                            
+                        
+                        
+
+                    
+                    
+                </div>
+
+
+        </div>
+        
+        <!-- Downloda app -->
+        <div>
+            
+           
+        </div>
+
+    </div>
+    
+   
+{% endblock content %}
+    

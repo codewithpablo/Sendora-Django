@@ -1,0 +1,56 @@
+{% extends 'left-sidebar.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block sidebar %}
+<div class="h-full flex  justify-center items-center">
+    
+    <div class="max-w-xl mx-auto  bg-white shadow-lg rounded-lg overflow-hidden border border-gray-300">
+        <!-- Encabezado -->
+        <div class="bg-gray-200 text-gray-700 p-6 text-center">
+            <h1 class="text-4xl font-bold tracking-wide flex gap-[5px] mx-auto w-fit">
+                <img src="{% static 'img/dollar.svg' %}" alt="" width="30px" height="30px">
+               <span>Sendora</span>
+            </h1>
+            <p class="text-sm font-light">Tu solución financiera</p>
+        </div>
+        
+        <!-- Título del comprobante -->
+        <div class="p-6 text-center border-b border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-800">Comprobante de ingreso</h2>
+            <p class="text-[15px] text-gray-500 mt-1 ">#{{ ingreso.id }}</p>
+        </div>
+        
+        <!-- Detalles de la transacción -->
+        <div class="p-6">
+            <!-- Bloque con icono -->
+            <div class="flex justify-end items-center mb-4">
+               
+                <h3 class="text-lg font-medium text-gray-700 ml-2">Detalles</h3>
+            </div>
+            <!-- Tabla de detalles -->
+            <div class="grid grid-cols-2 gap-y-4 text-sm">
+                <div class="text-gray-500">Fecha y hora:</div>
+                <div class="text-gray-700 text-right">{{ ingreso.fecha_y_hora }}</div>
+                <div class="text-gray-500">De:</div>
+                <div class="text-gray-700 text-right">Banco {{ ingreso.origen.banco }}</div>
+                <div class="text-gray-500">A:</div>
+                <div class="text-gray-700 text-right">{{request.user.first_name}} {{request.user.last_name}}</div>
+                <div class="text-gray-500">Monto:</div>
+                <div class="text-gray-700 text-right">$ {{ ingreso.monto|intcomma }}</div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="bg-gray-100 p-6 text-center h-full">
+            <p class="text-sm text-gray-600">Gracias por confiar en <span class="text-blue-600 font-semibold">Sendora</span>.</p>
+            <p class="text-sm text-gray-500 mt-1">Para cualquier consulta, visita <a href="#" class="text-blue-500 underline">www.sendora.com</a></p>
+        </div>
+    </div>
+
+        </div> 
+
+
+{% endblock sidebar %}

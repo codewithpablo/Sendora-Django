@@ -1,0 +1,48 @@
+.dottedBackground {
+    background-image: url("../img/gray-dotted.svg");
+    background-size: 150%;
+    
+}
+.delicate-light-red {
+    background-color: #ff6f61; /* Rojo suave con un toque cálido */
+}
+
+.delicate-soft-orange {
+    background-color: #ffb87d; /* Naranja suave y cálido */
+}
+
+.delicate-light-green {
+    background-color: #54ce41; /* Verde claro y fresco */
+}
+
+.delicate-soft-violet {
+    background-color: #a88fd8; /* Violeta suave y elegante */
+}
+
+.delicate-pale-orange {
+    background-color: #f1c27d; /* Naranja pálido suave */
+}
+
+.delicate-light-celeste {
+    background-color: #87ceeb; /* Celeste suave y brillante */
+}
+
+.delicate-light-blue {
+    background-color: #7ec8e3; /* Azul suave con un toque fresco */
+}
+
+.delicate-dark-burgundy {
+    background-color: #e299a6; /* Burdeos oscuro, con elegancia */
+}
+
+.delicate-pale-yellow {
+    background-color: #f6e58d; /* Amarillo suave y luminoso */
+}
+
+.delicate-light-beige {
+    background-color: #ddbb7c; /* Beige claro y cálido */
+}
+
+.delicate-light-brown {
+    background-color: #bea376; /* Marrón suave con un toque terroso */
+}

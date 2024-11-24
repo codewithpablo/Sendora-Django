@@ -1,0 +1,44 @@
+{% extends 'admin-panel.html' %}
+
+{% load  static %}
+
+{% load humanize %}
+{% block title %}Motivos{% endblock %}
+
+
+{% block panelcontent %}
+        <div class="overflow-x-auto flex justify-center py-5 h-full overflow-y-scroll hideScrollbar">
+            <table class="min-w-full border-collapse border border-gray-300 text-xs text-center">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2 font-medium">Alias</th>
+                        <th class="border border-gray-300 px-4 py-2 font-medium">Titular</th>
+                        <th class="border border-gray-300 px-4 py-2 font-medium">Saldo</th>
+                        <th class="border border-gray-300 px-4 py-2 font-medium">Movimientos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for account in object_list %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="border border-gray-300 px-4 py-2 font-semibold">{{ account.alias }}</td>
+                        <td class="flex  gap-[20px] items-center border-t border-gray-300 px-10 py-2">
+                            <div class="flex gap-[5px] w-10 h-10 rounded-full overflow-hidden border border-gray-300">
+                                <img src="{{ account.titular.profiles.foto_perfil.url }}" alt="Foto de perfil" class="w-full h-full object-cover">
+                            </div>
+                            <span>{{ account.titular.first_name }} {{ account.titular.last_name }}</span>
+                        </td>
+                        <td class="border border-gray-300 px-4 py-2 texst-lg font-bold">${{ account.saldo|intcomma }}</td>
+                        <td class="border border-gray-300 px-4 py-2">
+                            <a href="{% url  'movimientos' account.titular.id %}" class="w-fit bg-orange-400 py-[6px] px-[12px] rounded-lg text-white ">Ver movimientos</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="border border-gray-300 px-4 py-2 text-center">No hay cuentas disponibles.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+{% endblock panelcontent %}

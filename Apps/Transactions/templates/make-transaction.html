@@ -1,0 +1,95 @@
+{% extends 'left-sidebar.html' %}
+
+{% load static %}
+
+{% block sidebar %}
+<div class="flex  h-full  rounded-3xl ">
+    <div class="border flex  rounded-lg overflow-hidden bg-gray-100 shadow-2xl w-[100%] ">
+            <form class="flex-1 w-[60%] bg-gray-200 bg-opacity-25 h-full  shadow-md p-8 max-w-md flex flex-col justify-cente gap-10 overflow-y-scroll hideScrollbar " method="POST">
+                {% csrf_token %}
+                <h2 class="text-2xl  text-center mb-6 text-gray-800 font-bold">Enviar dinero</h2>
+
+                <div class="flex flex-col gap-10">
+                    <div class="text-center">
+                        <h2 class="font-bold">Lista de usuarios favoritos</h2>
+                        <p class="text-sm">Desliza horizontalmente para ver mas</p>
+                    </div>
+                    <ul class="space-x-2 flex overflow-x-auto w-full hideScrollbar" >
+                        {% for cuenta in usuarios_favoritos %}
+                            <li class="relaitve linesBackground flex flex-col justify-between flex-shrink-0 w-[80%] h-40 p-4 bg-gray-800 rounded-lg shadow text-white">
+                                <span>#{{ forloop.counter }}</span>
+                                <p class="text-sm  ">Alias: <span class="font-bold">{{ cuenta.alias }}</span></p>
+                                <p class="text-sm ">Titular: {{ cuenta.titular.first_name }} {{ cuenta.titular.last_name }}</p>
+                            </li>
+                        {% empty %}
+                            <p class="text-gray-500 text-center  w-full">No tienes cuentas favoritas.</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="alias_destino" class="block text-gray-700 font-medium mb-2">Cuenta destino:</label>
+                    <input 
+                        type="text" 
+                        name="alias_destino" 
+                        id="alias_destino" 
+                        required 
+                        placeholder="Alias" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-azulLaguna focus:border-azulLaguna"
+                    >
+                </div>
+                
+                <div class="mb-4">
+                    <label for="monto" class="block text-gray-700 font-medium mb-2">Monto:</label>
+                    <input 
+                        type="number" 
+                        name="monto" 
+                        id="monto" 
+                        step="0.01" 
+                        required 
+                        placeholder="Solo numeros positivos" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-azulLaguna focus:border-azulLaguna"
+                    >
+                </div>
+
+                <!-- Campo MOTIVO -->
+                <div class="mb-4">
+                    <label for="motivo" class="block text-gray-600 text-sm font-medium mb-2">Banco</label>
+                    <select 
+                    id="motivo" 
+                    name="motivo"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required>
+                    <option value="" disabled selected class="h-32">Motivo</option>
+                    {% for motivo in motivos %}
+                        <option value="{{ motivo }}">{{ motivo }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                        
+               <div class=" flex justify-center">
+                    <button 
+                    type="submit" 
+                    class="w-fit   bg-orange-400 text-white  py-2 px-4 rounded-lg focus:outline-none "
+                >
+                    Transferir
+                </button>
+               </div>
+        
+               <div class="py-10">
+                    <p class="text-center text-red-500 font-bold">{{  mensaje_insuficiente }}</p>
+                    <p class="text-center text-red-500 font-bold">{{  mensaje_no_existe }}</p>
+                    <p class="text-center text-red-500 font-bold">{{  mensaje_incompletos }}</p>
+                    <p class="text-center font-bold text-green-500">{{  mensaje_exito }}</p>
+                    <p class="text-center font-bold text-red-500">{{  mensaje_numero_positivo }}</p>
+
+               </div>
+            </form>
+    
+        <div class="flex-1 w-[50%]  h-full  ">
+            <img src="{% static 'img/pay-hands.avif' %}" alt="transfer-money"  class=" object-cover h-full" >
+        </div>
+    </div>
+</div>
+
+{% endblock sidebar %}

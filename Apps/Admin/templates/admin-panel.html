@@ -1,0 +1,58 @@
+{% extends 'left-sidebar.html' %}
+
+{% load  static %}
+
+{% load humanize %}
+{% block title %}Panel de administracion{% endblock %}
+
+
+{% block sidebar %}
+
+    <div class=" h-full rounded-xl  overflow-y-scroll hideScrollbar ">
+            <ul class="flex justify-center items-center gap-10 border rounded-xl bg-gray-50  p-[15px]  sticky top-0">
+                
+                {% if 'lista_de_usuarios' in request.path %}
+                    <li class=" w-fit text-center rounded-lg flex items-center justify-center gap-[5px] bg-blue-300 p-[5px]">
+                        <img src="{%  static 'img/list-of-users.svg' %}" alt="">
+                        <a href="{% url 'lista_de_usuarios' %}">Usuarios</a>
+                    </li>
+                {% else %}
+                    <li class=" w-fit text-center rounded-lg flex items-center justify-center gap-[5px]   px-[20px] py-[10px]">
+                        <img src="{%  static 'img/list-of-users.svg' %}" alt="">
+                        <a href="{% url 'lista_de_usuarios' %}">Usuarios</a>
+                    </li>
+                {% endif %}
+               
+                {% if 'lista_de_motivos' in request.path %}
+                    <li class=" w-fit text-center bg-blue-300 p-[5px] rounded-lg flex items-center justify-center gap-[5px]">
+                        <img src="{%  static 'img/lightbulb.svg' %}" alt="">
+                        <a href="{% url 'lista_de_motivos' %}">Motivos</a>
+                    </li>
+                {% else %}
+                    <li class=" w-fit text-center rounded-lg flex items-center justify-center gap-[5px]">
+                        <img src="{%  static 'img/lightbulb.svg' %}" alt="">
+                        <a href="{% url 'lista_de_motivos' %}">Motivos</a>
+                    </li>
+                {% endif %}
+                {% if 'lista_de_cuentas' in request.path %}
+                    <li class=" w-fit text-center rounded-lg bg-blue-300 p-[5px] flex items-center justify-center gap-[5px] whitespace-nowrap">
+                        <img src="{%  static 'img/accounts-list.svg' %}" alt="">
+                        <a href="{%  url 'lista_de_cuentas' %}">Cuentas Sendora</a>
+                    </li>
+                {% else %}
+                    <li class=" w-fit text-center rounded-lg flex items-center justify-center gap-[5px] whitespace-nowrap">
+                        <img src="{%  static 'img/accounts-list.svg' %}" alt="">
+                        <a href="{%  url 'lista_de_cuentas' %}">Cuentas Sendora</a>
+                    </li>
+                {% endif %}
+        
+               
+
+            </ul>
+
+            {% block panelcontent %}
+
+            {% endblock panelcontent %}
+    </div>
+
+{% endblock sidebar %}

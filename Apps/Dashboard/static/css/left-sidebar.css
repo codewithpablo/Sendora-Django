@@ -1,0 +1,25 @@
+  /* Poppins */
+  .poppinsMedium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  .linesBackground{
+    background-image: url("../img/lines.svg");
+    position: relative;
+  }
+
+  .dottedBackground{
+    background-image: url("../img/orange-dots.svg");
+    background-size: 50%;
+  }
+
+/* Ocultar scrollbar en Firefox */
+.hideScrollbar {
+    scrollbar-width: none; /* Firefox */
+}
+
+.lowerOpacityBackgroundWhiteColor{
+  background-color: rgba(255, 255, 255, 0.247);
+}

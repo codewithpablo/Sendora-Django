@@ -1,0 +1,88 @@
+
+html, body {
+    height: 100%;    /* Asegura que html y body ocupen el 100% de la altura del viewport */
+    margin: 0;       /* Elimina márgenes predeterminados del body */
+    padding: 0;      /* Elimina padding si es necesario */
+  }
+
+  /* Fuentes */
+
+  /* Poppins */
+  .poppinsMedium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  /* Rubik */
+  .rubikMedium {
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+/* Perspectiva para dar profundidad */
+.card-container {
+  perspective: 1500px;  /* Para más profundidad */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hoja trasera y delantera */
+.card {
+  position: relative;
+  width: 350px;
+  height: 175px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom right, #f59e0b, #e4a12f);
+  transform-style: preserve-3d; /* Necesario para mantener el 3D */
+  transition: transform 0.5s ease-out; /* Suaviza la transición */
+}
+
+/* Hoja trasera, delantera y tarjeta */
+.card:hover {
+  transform: rotateX(15deg) rotateY(15deg) translateZ(20px); /* Inclinación en 3D */
+}
+
+/* Sombras adicionales y efectos de iluminación */
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  z-index: -1;
+}
+
+/* Ajustes para las sombras en hover */
+.card:hover::before {
+  box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Detalle de las imágenes y contenido */
+.card img {
+  object-fit: contain;
+}
+
+@keyframes changeColor {
+  0% {
+    background-color: #4CAF50; /* Color inicial (verde) */
+  }
+  50% {
+    background-color: #FF5722; /* Color intermedio (naranja) */
+  }
+  100% {
+    background-color: #4CAF50; /* Vuelve al color inicial (verde) */
+  }
+}
+
+.elementoACambiarElColor {
+  animation: changeColor 3s infinite ease-in-out; /* 3 segundos de duración, repetido infinitamente */
+}

@@ -1,0 +1,68 @@
+{% extends 'left-sidebar.html' %}
+
+{% load static %}
+
+{% block sidebar %}
+    <div class="flex border rounded-xl bg-gray-100 h-[100%]">
+        
+        {% if cuentas %}
+            <form method="POST" action="" class="flex-3 flex  flex-col gap-6 items-center h-[100%] justify-center  p-24 rounded-lg shadow-lg">
+                {% csrf_token %}
+                <h1 class="text-3xl font-bold text-gray-700">Ingreso de dinero</h1>
+                <div>
+                    <div class="mb-4 w-full">
+                        <label for="cuenta" class="block text-lg font-medium text-gray-700">Selecciona una cuenta bancaria:</label>
+                        <select id="cuenta" name="cuenta" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        {% for cuenta in cuentas %}
+                            <option value="{{ cuenta.id }}">
+                                {{ cuenta }}
+                            </option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                
+                    <div class="mb-6 w-full">
+                        <label for="monto" class="block text-lg font-medium text-gray-700">Monto:</label>
+                        <input type="number" id="monto" name="monto" step="0.01" min="0.01" placeholder="Ingresa el monto" 
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                            required />
+                    </div>
+                
+                    <div class="flex items-center justify-between">
+                        <button type="submit" class="w-full py-2 px-4 bg-blue-400 text-white font-semibold rounded-md hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                            Ingresar dinero
+                        </button>
+                    </div>
+                </div>
+            
+                {% if mensaje_monto_no_valido  %}
+                    <div class="mt-4 text-center text-lg font-semibold text-red-500">
+                        {{ mensaje_monto_no_valido }}
+                    </div>
+                {% elif mensaje_insuficiente %}
+                    <div class="mt-4 text-center text-lg font-semibold text-red-500">
+                        {{ mensaje_insuficiente }}
+                    </div>
+                {% elif mensaje_exito %}
+                    <div class="mt-4 text-center text-lg font-semibold text-green-500">
+                        {{ mensaje_exito }}
+                    </div>
+                {% elif mensaje %}
+                    <div class="mt-4 text-center text-lg font-semibold text-gray-600">
+                        {{ mensaje }}
+                    </div>
+                {% endif %}
+            </form>
+        {% else %}
+           <div class="flex-1 flex flex-col justify-center items-center p-10 text-center h-[100%] ">
+                <h3 class="text-2x font-bold">No posee cuentas asociadas a Sendora.</h3>
+                <p>Comienza a agregar haciendo click en el boton de la pagina principal</p>
+           </div>
+        {% endif %}
+            
+        
+        <div class="flex-1 w-[100%] p-12 relative flex items-center justify-center">
+                <img src="{% static 'img/coins.png' %}" alt="" class=" object-contain h-[100%] w-[100%]">
+        </div>        
+    </div>
+{% endblock sidebar %}

@@ -1,0 +1,45 @@
+{% extends 'admin-panel.html' %}
+{% load static %}
+
+{% block panelcontent %}
+
+<div class="flex  mt-[20px]  justify-end h-[80%] rounded-lg overflow-hidden">
+    <form method="POST" class="flex-1 flex h-full flex-col justify-center items-center gap-[40px] bg-gray-100 shadow-md rounded px-8 pt-6 pb-8">
+
+        
+        <h2 class="font-bold text-2xl">Editar motivo</h2>
+        {% csrf_token %}
+        <!-- Campo para editar el nombre del motivo -->
+        <div class="mb-4">
+            <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">
+                Nombre del Motivo
+            </label>
+
+            <!-- en value de este input de abajo  el objeto actual que se está editando se puede obtener usando el atributo object -->
+            <input 
+                type="text" 
+                id="nombre" 
+                name="nombre" 
+               
+                value="{{ object.nombre }}" 
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                placeholder="Ingresa el nombre del motivo"
+            />
+        </div>
+        
+        <!-- Botón para enviar -->
+        <div class="flex justify-end">
+            <button 
+                type="submit" 
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Guardar
+            </button>
+        </div>
+    </form>
+
+    <div class="flex-1">
+        <img src="{% static 'img/edit-motive.png' %}" alt="" class="object-contain" width="400px" height="400px">
+    </div>
+</div>
+{% endblock panelcontent %}
+

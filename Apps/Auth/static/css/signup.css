@@ -1,0 +1,3 @@
+.hideSidebar {
+    scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+}

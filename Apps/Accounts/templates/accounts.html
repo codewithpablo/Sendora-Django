@@ -1,0 +1,64 @@
+{% extends 'left-sidebar.html' %}
+
+{% load  static %}
+
+{% load humanize %}
+
+{% block sidebar %}
+    <div class=" rounded-xl w-[100%] h-[100%] overflow-y-scroll p-1 hideScrollbar">
+        <div class="flex items-center justify-between">
+            <h2 class="py-[30px] text-sm font-semibold ">Cuentas bancarias asociadas con Sendora</h2>
+            <a href="{% url 'addbankaccount' %}" class="max-w-[150px] h-fit flex-1 flex items-center justify-center gap-2 bg-blue-300 py-2 px-4 text-white rounded-lg text-sm transform transition-all duration-300 hover:scale-105">
+                <img src="{% static 'img/add-bank.svg' %}" alt="Añadir cuenta" width="20" height="20">
+                <span class="whitespace-nowrap text-[12px]">Añadir cuenta</span>
+            </a>
+        </div>
+        <!-- Todas las tarjetas de las cuentas bancarias asociadas(Contenedor) -->
+        <div class="grid grid-cols-3 gap-[15px] px-[25px]">
+            
+            {% if cuentas_bancarias %}
+                {% for t in cuentas_bancarias  %}
+                    <div class="">
+                                <!-- Cada tarjeta por individual -->
+                            <div class=" mb-[10px] linesBackground bg-gray-300 relative z-50 flex h-[175px]  text-gray-700 rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:bg-gray-800 hover:text-white
+                          
+                            ">
+                                <div class="flex-1 flex flex-col justify-between px-5 py-3 ">
+                                    <h3 class="font-semibold">Banco {{t.banco }}</h3>
+                                    <div class="flex justify-between items-center">
+                                        <p class="text-2xl font-bold">${{t.saldo|intcomma }}</p>
+                                    </div>
+
+                                    <div>
+                                        <p class="">
+                                            {{ user }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="w-[33.33%] relative  ">
+                                    <div class="absolute left-0 top-0 h-[100%]"></div>
+                                    <div class=" h-[100[12px] w-[100%] flex flex-col items-center justify-between pb-5 pt-10">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- POST: Se usa para enviar datos al servidor que implican una acción que modifica el estado del sistema, como crear, actualizar o eliminar recursos. -->
+                           <div class="flex justify-center">
+                                <form action="{% url 'deslink' t.id %}" method="POST" class="flex text-[12px] w-fit py-[5px] px-[10px] bg-gray-700 text-white rounded-lg whitespace-nowrap">
+                                    {% csrf_token %}
+                                    <button type="submit" class=" flex items-center gap-[5px]">
+                                        <span>Desvincular</span>
+                                        <img src="{% static 'img/unplug.svg' %}" width="20px" height="20px" alt="Desvincular" />
+                                    </button>
+                                </form>
+                           </div>
+                            
+                    </div>
+                   
+                {% endfor %}
+            {% endif %}
+                
+        </div>
+    </div>
+{% endblock sidebar%}

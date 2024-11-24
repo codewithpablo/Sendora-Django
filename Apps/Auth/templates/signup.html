@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}
+        Crear cuenta nueva
+{% endblock title %}
+
+<!-- Nombrando urls -->
+{% url 'login' as log_in_url %}
+
+{% block head_login  %}
+        <!-- Estilos -->
+        <link rel="stylesheet" href="{% static 'css/login.css' %}">
+        <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+        <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock head_login %}
+
+{% block content %}
+  <div class="flex  h-[100%]  max-w-[1200px] mx-auto pb-[100px]">
+
+        <!-- Fondo azul marino -->
+        <div class=" formBackground  h-[100%] text-white flex items-end text-center  p-[40px]">
+        </div>
+
+        <!-- Primera mitad -->
+        <div class="flex flex-col flex-1  items-start justify-center     h-[100%]">
+
+                <!-- Logo -->
+                <div class="flex gap-[5px] items-center text-gray-800  transform hover:rotate-6 duration-1000">
+                        <img src="{% static 'img/3d-credit-cards.png' %}" alt="" width="500px" height="500px">
+                </div>
+        </div>
+
+        <!-- Segunda mitad -->
+        <div class="flex-1 overflow-y-scroll hideSidebar">
+                <div class="w-[500px] mx-auto h-[100%]">
+                        <form method="POST" class="flex flex-col gap-[20px] justify-center items-center ">
+                                {% csrf_token %}
+                             <div class="py-10">
+                                <h2 class=" text-2xl text-center font-bold">Creacion de cuenta nueva</h2>
+                                <h2 class=" text-center font-bold">Crea tu billetera virtual Sendora y asociala con una o mas cuentas bancarias</h2>
+                             </div>
+                                <div class="relative flex flex-col">
+                                        <label>Nombre de usuario:</label>
+                                        {{ form.username }}
+                                </div>
+                                <div class="relative flex flex-col">
+                                        <label>Nombre:</label>
+                                        {{ form.first_name }}
+                                </div>
+                                <div class="relative flex flex-col">
+                                        <label>Apellido</label>
+                                        {{ form.last_name }}
+                                </div>
+                                <div class="relative flex flex-col">
+                                        <label>Email:</label>
+                                        {{ form.email }}
+                                </div>
+                                <div class="relative flex flex-col">
+                                        <label>Contraseña:</label>
+                                        {{ form.password1 }}
+                                </div>
+                                <div class="relative flex flex-col">
+                                        <label>Contraseña:</label>
+                                        {{ form.password2 }}
+                                </div>
+                                <button class="bg-red-500 text-white py-[10px] px-[20px] rounded-lg mx-auto transition-all duration-200 ease-in-out transform hover:scale-105">
+                                        Iniciar sesion
+                                </button>
+                        </form>
+                </div>
+        </div>
+  </div>
+{% endblock content %}
+    

@@ -1,0 +1,61 @@
+{% extends 'admin-panel.html' %}
+
+{% load  static %}
+
+{% load humanize %}
+{% block title %}Motivos{% endblock %}
+
+    {% block panelcontent %}
+    <div class="overflow-x-auto flex justify-center py-5 h-full overflow-y-scroll hideScrollbar">
+        <table class="min-w-full border-collapse border border-gray-300 text-xs text-center">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="border border-gray-300 px-2 py-1 font-medium">ID</th>
+                    <th class="border border-gray-300 px-2 py-1 font-medium">Nombre</th>
+                    <th class="border border-gray-300 px-2 py-1 font-medium w-[400px]">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for motive in object_list %}
+                <tr class="hover:bg-gray-100">
+                    <td class="border border-gray-300 px-2 py-1">{{ motive.id }}</td>
+                    <td class="border border-gray-300 px-2 py-1">{{ motive.nombre }}</td>
+                    <td class="border border-gray-300 px-2 py-1">
+                        <div class="flex justify-center gap-2">
+                            <form action="{% url 'editarmotivo'  motive.id %}" method="POST" class="flex gap-[5px] justify-center items-center">
+                                {% csrf_token %}
+                                <button type="submit" class="text-white bg-blue-400 p-2 rounded-lg text-[10px] w-fit flex items-center gap-[5px]">
+                                    <img src="{% static 'img/pencil.svg' %}" alt="Edit" class="size-[15px]">
+                                    Editar
+                                </button>
+                            </form>
+                            
+                            <form action="{% url 'crearmotivo' %}" method="POST" class="flex gap-[5px] justify-center items-center">
+                                {% csrf_token %}
+                                <button type="submit" class="text-white whitespace-nowrap text-[10px] bg-orange-400 p-2 rounded-lg w-fit flex gap-[5px] items-center">
+                                    <img src="{% static 'img/plus.svg' %}" alt="" class="size-[15px]">
+                                    Crear
+                                </button>
+                            </form>
+                            <form action="{% url 'eliminarmotivo' motive.id %}" method="POST" class="inline">
+                                {% csrf_token %}
+                                <button type="submit" 
+                                        class="flex gap-[5px] justify-center items-center text-white whitespace-nowrap text-[10px] bg-red-500 p-2 rounded-lg w-fit">
+                                    <img src="{% static 'img/trash.svg' %}" alt="" class="size-[15px]">
+                                    Eliminar
+                                </button>
+                            </form>
+                            
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="border border-gray-300 px-2 py-1 text-center">No hay motivos disponibles.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% endblock panelcontent %}

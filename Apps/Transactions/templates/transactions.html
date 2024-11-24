@@ -1,0 +1,112 @@
+{% extends 'left-sidebar.html' %}
+
+{% load static %}
+
+{% block sidebar %}
+<div class="flex justify-between gap-3 h-[100%] max-w-4xl mx-auto">
+
+    <!-- Títulos y cards de transacciones recibidas -->
+    <div class="flex flex-col flex-1 h-[100%] overflow-y-scroll hideScrollbar">
+        <h2 class="text-sm  text-gray-800 text-center my-4">Transacciones recibidas</h2>
+        <div class="space-y-4">
+            {% if entradas %}
+                {% for t in entradas %}
+                    <div class="flex items-center gap-4 p-4 bg-gray-100 rounded-xl shadow-md hover:shadow-lg transition-all">
+                        <img src="{{ t.remitente.profiles.foto_perfil.url }}" alt="" class="w-20 h-20 rounded-full">
+                        <div class="flex-1 flex flex-col gap-2 justify-between">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-800">
+                                    {{ t.remitente.first_name }} {{ t.remitente.last_name }}
+                                </h3>
+                                <p class="text-xs text-gray-500">{{ t.fecha_y_hora }}</p>
+                            </div>
+
+                            <form action="{% url 'marcarcomofavorito' t.remitente.sendoraaccounts.id %}" method="POST" class="flex gap-5 items-start">
+                                {% csrf_token %}
+                                <button type="submit" class="flex items-center bg-gray-700 rounded-xl px-[10px] py-[5px] text-white">
+                                    {% if t.remitente.sendoraaccounts in perfil.cuentas_favoritas.all %}
+                                        <span class="font-semibold text-[10px]">Desmarcar</span>
+                                    {% else %}
+                                        <span class="font-semibold text-[10px]">Marcar</span>
+                                    {% endif %}
+                                </button>
+                                <div>
+                                    {% if t.remitente.sendoraaccounts in perfil.cuentas_favoritas.all %}
+                                        <span class="font-semibold text-[10px] text-green-500">FAV: SI</span>
+                                    {% else %}
+                                        <span class="font-semibold text-[10px] text-red-500">FAV: NO</span>
+                                    {% endif %}
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="text-right  flex flex-col items-end gap-[10px]">
+                            <p class="text-green-500 font-semibold">+ ${{ t.monto }}</p>
+                            <p class="text-xs text-gray-500">{{ t.motivo }}</p>
+                            <a href="{% url 'ver_comprobante' t.id %}" class="flex gap-[5px] items-center bg-blue-400  text-white rounded-lg py-[6px] px-[9px]">
+                                <img src="{%  static 'img/receipt.svg' %}" alt="">
+                            </a>
+                           
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-gray-500 text-center">No hay transacciones recibidas.</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+    <!-- Títulos y cards de transacciones enviadas -->
+    <div class="flex flex-col flex-1 h-[100%] overflow-y-scroll hideScrollbar">
+        <h2 class="text-sm text-gray-800 text-center my-4">Transacciones enviadas</h2>
+        <div class="space-y-4">
+            {% if salidas %}
+                {% for t in salidas %}
+                    <div class="flex items-center gap-4 p-4 bg-gray-100 rounded-xl shadow-md hover:shadow-lg transition-all">
+                        <img src="{{ t.destinatario.profiles.foto_perfil.url }}" alt="" class="w-20 h-20 rounded-full">
+                        <div class="flex-1 flex flex-col gap-2">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-800">
+                                    {{ t.destinatario.first_name }} {{ t.destinatario.last_name }}
+                                </h3>
+                                <p class="text-xs text-gray-500">{{ t.fecha_y_hora }}</p>
+                            </div>
+                            
+                            <!-- Formulario para marcar como favorito -->
+                            <form action="{% url 'marcarcomofavorito' t.destinatario.sendoraaccounts.id %}" method="POST" class="flex gap-5 items-start">
+                                {% csrf_token %}
+                                <button type="submit" class="flex items-center bg-gray-700 rounded-xl px-[10px] py-[5px] text-white">
+                                    {% if t.destinatario.sendoraaccounts in perfil.cuentas_favoritas.all %}
+                                        <span class="font-semibold text-[10px]">Desmarcar</span>
+                                    {% else %}
+                                        <span class="font-semibold text-[10px]">Marcar</span>
+                                    {% endif %}
+                                </button>
+                                <div>
+                                    {% if t.destinatario.sendoraaccounts in perfil.cuentas_favoritas.all %}
+                                        <span class="font-semibold text-[10px] text-green-500">FAV: SI</span>
+                                    {% else %}
+                                        <span class="font-semibold text-[10px] text-red-500">FAV: NO</span>
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </div>
+                        <div class="text-right flex flex-col items-end gap-[12px]">
+                            <p class="text-red-500 font-semibold">- ${{ t.monto }}</p>
+                            <p class="text-xs text-gray-500">{{ t.motivo }}</p>
+                            <a href="{% url 'ver_comprobante' t.id %}" class="flex gap-[5px] items-center bg-orange-400 text-white rounded-lg py-[6px] px-[9px]">
+                                <img src="{% static 'img/receipt.svg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-gray-500 text-center">No hay transacciones enviadas.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock sidebar %}

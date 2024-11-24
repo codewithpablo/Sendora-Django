@@ -1,0 +1,185 @@
+{% extends 'left-sidebar.html' %}
+
+{% load  static %}
+
+
+{% block sidebar %}
+    <div class="flex gap-[10px] text-black h-[100%] ">
+
+            
+            <!-- Contenedor principal -->
+            <div class=" flex-1 bg-gray-100 rounded-b-lg border overflow-hidden h-[99.90%] ">
+                <!-- Encabezado del perfil -->
+                <div class="flex items-center h-[150px]  bg-gradient-to-r bg-blue-200 text-white">
+                    <!-- Foto y detalles del perfil -->
+                    <div class="h-[100%]">
+                        <img src="{{ perfil.foto_perfil.url  }}" alt="Foto de perfil" class="w-[300px] h-[100%] border-gray-700 object-cover">
+                    </div>
+                    <div class="text-center w-[100%] text-3xl font-bold text-gray-700">
+                            <span>{{ request.user.first_name }}</span>
+                            <br>
+                            <span>{{ request.user.last_name }}</span>
+                    </div>
+                </div>
+        
+                <!-- Información del perfil -->
+                <div class="p-6 space-y-6">
+                    
+                    <h2 class="text-xl font-semibold text-gray-800">Información</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                       
+                        <div class="space-y-2">
+                            <p class="font-semibold text-gray-600">Nombre</p>
+                            {% if request.user.first_name %}
+                                <p class="text-gray-800 text-[14px]">{{request.user.first_name }}</p>
+                            {% else %}
+                                <span>-</span>
+                             {% endif %}
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-semibold text-gray-600">Apellido</p>
+                            {% if request.user.last_name %}
+                                <p class="text-gray-800 text-[14px]">{{request.user.last_name }}</p>
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-semibold text-gray-600">Alias</p>
+                            {% if request.user.username %}
+                                <p class="text-gray-800 text-[14px]">{{ request.user.username }}</p>
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-semibold text-gray-600">Email:</p>
+                            {% if request.user.email %}
+                                <p class="text-gray-800 text-[14px]">{{request.user.email }}</p>
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-semibold text-gray-600">Teléfono:</p>
+                            {% if perfil.phone_number %}
+                                <p class="text-gray-800 text-[14px]">{{ perfil.phone_number }}</p>
+                            {% else %}
+                                <span>-</span>
+                             {% endif %}
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <p class="font-semibold text-gray-600">Fecha de nacimiento:</p>
+                            {% if perfil.fecha_nacimiento %}
+                                <p class="text-gray-800 text-[14px]">{{ perfil.fecha_nacimiento }}</p>
+                            {% else %}
+                                <span>-</span>
+                             {% endif %}
+                        </div>
+
+                        <div class="space-y-2">
+                            <p class="font-semibold text-gray-600">DNI</p>
+                            {% if perfil.phone_number %}
+                                <p class="text-gray-800 text-[14px]">{{ perfil.dni }}</p>
+                            {% else %}
+                                <span>-</span>
+                             {% endif %}
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-semibold text-gray-600">Estado de la cuenta</p>
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.is_active ==  1%}
+                                    <p class="text-gray-800 text-[14px]">Activo</p>
+                                {% else %}
+                                    <p class="text-gray-800 text-[14px]">Inactivo</p>
+                                {% endif %}
+                            {% else %}
+                                <p class="text-gray-800 text-[14px]">No autenticado</p>
+                            {% endif %}
+                        </div>
+
+                       
+                       
+                       
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Formulario de edición del perfil -->
+                <form  method="POST" enctype="multipart/form-data" class="flex-1 px-6 py-2 space-y-9 overflow-y-auto h-full border rounded-xl hideScrollbar bg-gray-100" >
+                    {% csrf_token %}
+                    <h2 class="text-xl font-semibold text-gray-800 text-center">Editar Información</h2>
+                    
+                    <div class="grid grid-cols-2 gap-[10px]">
+                        <!-- Nombre -->
+                        <div class="space-y-2 flex flex-col">
+                            <label for="first_name" class="font-semibold text-gray-600">Nombre</label>
+                            <input name="first_name" type="text" value="{{ user_form.first_name.value }} " class="py-[10px] px-[20px] rounded-xl">
+                        </div>
+                        <!-- Apellido -->
+                        <div class="space-y-2 flex flex-col">
+                            <label for="last_name" class="font-semibold text-gray-600">Apellido</label>
+                            <input name="last_name" type="text" value="{{ user_form.last_name.value }} " class="py-[10px] px-[20px] rounded-xl">
+                        </div>
+                        <!-- Nombre de usuario -->
+                        <div class="space-y-2 flex flex-col">
+                            <label for="username" class="font-semibold text-gray-600">Alias</label>
+                           <input name="username" type="text" value=" {{  user_form.username.value }} " class="py-[10px] px-[20px] rounded-xl">
+                        </div>
+
+                        <!-- DNI -->
+                        <div class="space-y-2 flex flex-col">
+                            <label for="dni" class="font-semibold text-gray-600">DNI</label>
+                           <input name="dni" type="text"  value="{{  perfil.dni }} " class="py-[10px] px-[20px] rounded-xl">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="space-y-2 flex flex-col">
+                            <label for="email" class="font-semibold text-gray-600">Email</label>
+                            <input name="email" type="email" value="{{  user_form.email.value }}" class="py-[10px] px-[20px] rounded-xl">
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="space-y-2 flex flex-col">
+                            <label for="phone_number" class="font-semibold text-gray-600">Teléfono</label>
+                            <input name="phone_number" type="text" value="{{  perfil.phone_number }} " class="py-[10px] px-[20px] rounded-xl">
+                            
+                        </div>
+
+                     
+
+                        <!-- Fecha de nacimiento -->
+                        <div class="space-y-2">
+                            <label for="fecha_nacimiento" class="font-semibold text-gray-600">Fecha de nacimiento</label>
+                            <input name="fecha_nacimiento" type="date" value="{{ profile_form.fecha_nacimiento.value|date:'Y-m-d' }}" class="py-[10px] px-[20px] rounded-xl">
+                        </div>
+                        
+
+
+                        <!-- Foto de perfil -->
+                        <div class="space-y-2  flex flex-col ">
+                            <span class="text-center font-semibold text-gray-600">Foto de perfil</span>
+                            <label for="foto_perfil" class=" text-gray-600 bg-gray-300 py-[6px] px-[12px] rounded-lg w-[100%] text-center">Cambiar</label>
+                            <!-- Campo de archivo (input) para cambiar la foto -->
+                            <input name="foto_perfil" type="file" name="foto_perfil" id="foto_perfil" accept="image/*" class="hidden" >
+                        </div>
+
+                    </div>
+
+              
+
+                    <!-- Botón de envío -->
+                    <div class="flex justify-center space-x-4">
+                        <button type="submit" class="bg-blue-400 text-white hover:bg-orange-400 px-6 py-2 rounded-lg">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+ 
+        
+        
+    </div>
+
+
+{% endblock sidebar%}

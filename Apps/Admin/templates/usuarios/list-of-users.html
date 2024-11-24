@@ -1,0 +1,77 @@
+{% extends 'admin-panel.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %}Lista de usuarios{% endblock %}
+
+{% block panelcontent %}
+<div class="overflow-x-auto flex justify-center py-5 h-full overflow-y-scroll hideScrollbar">
+    <table class="min-w-full border border-gray-300 text-sm table-auto">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="border border-gray-300 px-4 py-2 text-left font-medium">ID</th>
+                <th class="border border-gray-300 px-4 py-2 text-left font-medium">Nombre de usuario</th>
+                <th class="border border-gray-300 px-4 py-2 text-left font-medium">Email</th>
+                <th class="border border-gray-300 px-4 py-2 text-left font-medium">Se unió el</th>
+                <th class="border border-gray-300 px-4 py-2 text-left font-medium">Activo</th>
+                <th class="border border-gray-300 px-4 py-2 text-left font-medium">Grupo</th>
+                <th class="border border-gray-300 px-4 py-2 text-left font-medium">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in object_list %}
+            <tr class="hover:bg-gray-100 even:bg-gray-50">
+                <td class="border border-gray-300 px-4 py-2 text-center">{{ usuario.id }}</td>
+                <td class="border-t border-gray-300 px-4 py-2 flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-300">
+                            <img src="{{ usuario.profiles.foto_perfil.url }}" alt="Foto de perfil" class="w-full h-full object-cover">
+                    </div>
+                    {{ usuario.username }}
+                </td>
+                <td class="border border-gray-300 px-4 py-2">{{ usuario.email }}</td>
+                <td class="border border-gray-300 px-4 py-2 text-center">{{ usuario.date_joined|date:"Y-m-d" }}</td>
+                <td class="border border-gray-300 px-4 py-2 text-center">
+                    {% if usuario.is_active %}
+                        <span class="text-green-500 font-semibold">Sí</span>
+                    {% else %}
+                        <span class="text-red-500 font-semibold">No</span>
+                    {% endif %}
+                </td>
+                <td class="border border-gray-300 px-4 py-2">
+                    {% if usuario.groups.all %}
+                        {{ usuario.groups.all|join:", " }}
+                    {% else %}
+                        Sin grupo
+                    {% endif %}
+                </td>
+                <td class="border border-gray-300 px-4 py-2 text-center">
+                    <div class="flex justify-center gap-2">
+                        <a href="{% url 'ediciondeusuario' usuario.id %}" class="flex-1 flex justify-center items-center text-white bg-blue-400 p-2 rounded-lg text-[10px]">
+                            <img src="{% static 'img/pencil.svg' %}" alt="" class="size-[15px]">
+                            Editar
+                        </a>
+                       
+                        {% if usuario.is_active %}
+                            <a href="{% url 'toggle_user_active' usuario.id %}" class="text-white bg-red-500 p-2 rounded-lg flex-1 flex justify-center items-center text-[10px]">
+                                <img src="{% static 'img/shield-minus.svg' %}" alt=" "class="size-[15px]">
+                                <span >Desactivar</span>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'toggle_user_active' usuario.id %}" class="text-white bg-green-500 p-2 rounded-lg flex-1 flex justify-center items-center text-[10px]">
+                                <img src="{% static 'img/shield-check.svg' %}" alt="" class="size-[15px]">
+                                <span >Activar</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="border border-gray-300 px-4 py-2 text-center">No hay usuarios disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock panelcontent %}
