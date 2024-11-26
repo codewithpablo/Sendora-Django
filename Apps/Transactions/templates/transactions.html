@@ -21,23 +21,7 @@
                                 <p class="text-xs text-gray-500">{{ t.fecha_y_hora }}</p>
                             </div>
 
-                            <form action="{% url 'marcarcomofavorito' t.remitente.sendoraaccounts.id %}" method="POST" class="flex gap-5 items-start">
-                                {% csrf_token %}
-                                <button type="submit" class="flex items-center bg-gray-700 rounded-xl px-[10px] py-[5px] text-white">
-                                    {% if t.remitente.sendoraaccounts in perfil.cuentas_favoritas.all %}
-                                        <span class="font-semibold text-[10px]">Desmarcar</span>
-                                    {% else %}
-                                        <span class="font-semibold text-[10px]">Marcar</span>
-                                    {% endif %}
-                                </button>
-                                <div>
-                                    {% if t.remitente.sendoraaccounts in perfil.cuentas_favoritas.all %}
-                                        <span class="font-semibold text-[10px] text-green-500">FAV: SI</span>
-                                    {% else %}
-                                        <span class="font-semibold text-[10px] text-red-500">FAV: NO</span>
-                                    {% endif %}
-                                </div>
-                            </form>
+                     
 
                         </div>
                         <div class="text-right  flex flex-col items-end gap-[10px]">
@@ -74,24 +58,7 @@
                                 <p class="text-xs text-gray-500">{{ t.fecha_y_hora }}</p>
                             </div>
                             
-                            <!-- Formulario para marcar como favorito -->
-                            <form action="{% url 'marcarcomofavorito' t.destinatario.sendoraaccounts.id %}" method="POST" class="flex gap-5 items-start">
-                                {% csrf_token %}
-                                <button type="submit" class="flex items-center bg-gray-700 rounded-xl px-[10px] py-[5px] text-white">
-                                    {% if t.destinatario.sendoraaccounts in perfil.cuentas_favoritas.all %}
-                                        <span class="font-semibold text-[10px]">Desmarcar</span>
-                                    {% else %}
-                                        <span class="font-semibold text-[10px]">Marcar</span>
-                                    {% endif %}
-                                </button>
-                                <div>
-                                    {% if t.destinatario.sendoraaccounts in perfil.cuentas_favoritas.all %}
-                                        <span class="font-semibold text-[10px] text-green-500">FAV: SI</span>
-                                    {% else %}
-                                        <span class="font-semibold text-[10px] text-red-500">FAV: NO</span>
-                                    {% endif %}
-                                </div>
-                            </form>
+                           
                         </div>
                         <div class="text-right flex flex-col items-end gap-[12px]">
                             <p class="text-red-500 font-semibold">- ${{ t.monto }}</p>

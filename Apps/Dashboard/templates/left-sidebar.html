@@ -92,6 +92,17 @@
                             <span class="text-gray-500 text-[14px]">Perfil</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{% url 'vercontactos' %}" 
+                        class="{% if 'vercontactos' in request.path %} flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  border bg-blue-200 py-[10px] rounded-lg
+                        {% else %}
+                        flex items-center px-[60px] gap-[10px] whitespace-nowrap transition-all duration-300  py-[10px] rounded-lg border 
+                        {% endif %}
+                        ">
+                            <img src="{% static 'img/user.svg' %}" alt="banks" width="25px" height="25px">
+                            <span class="text-gray-500 text-[14px]">Contactos</span>
+                        </a>
+                    </li>
                 
                  {% if usuario_es_administrador %}     
                             

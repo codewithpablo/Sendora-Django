@@ -9,4 +9,5 @@ urlpatterns = [
     path("maketransaction/", views.realizar_transferencia, name="maketransaction"),
     path("ver_comprobante/<int:id_comprobante>", views.ver_comprobante, name="ver_comprobante"),
     path('marcarcomofavorito/<int:account_id>/', views.marcar_favorita, name='marcarcomofavorito'),
+    path('vercontactos/', views.contacts, name='vercontactos'),
 ]

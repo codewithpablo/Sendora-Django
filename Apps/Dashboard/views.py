@@ -14,7 +14,9 @@ def dashboard(request):
     # Cantidad de cuentas
     cantidad_cuentas  = BankAccounts.objects.filter(titular=usuario_logueado).count()
     #Balance total 
-    balance_total = round(BankAccounts.objects.filter(titular=usuario_logueado).aggregate(total_balance=Sum('saldo'))['total_balance'] or 0, 2)
+    balance_total = round(BankAccounts.objects.filter(titular=usuario_logueado)
+                          .aggregate(total_balance=Sum('saldo'))['total_balance'] or 0, 
+                          2)
     #Transacciones recibidias o enviadas por el usuario logueado
     todas_transacciones = Transactions.objects.filter(Q(remitente=usuario_logueado) | Q(destinatario=usuario_logueado)).order_by('-fecha_y_hora')
     

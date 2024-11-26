@@ -8,6 +8,8 @@ from Apps.Motives.models import Motives
 from Apps.Profiles.models import Profiles
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
+from Apps.Users.models import Users
+from django.db.models import Q
 
 #!Funcion para ver todas las transacciones enviadas y recibidas
 @login_required
@@ -44,7 +46,7 @@ def marcar_favorita(request, account_id):
         perfil.cuentas_favoritas.add(cuenta)
 
     # Redirigime a la lista de transacciones
-    return redirect('transactions')
+    return redirect('vercontactos')
 
 
 #! Funcion para enviar dinero a otra cuenta
@@ -138,3 +140,22 @@ def ver_comprobante(request, id_comprobante):
     return render(request, "comprobante.html", context)
 
 
+def contacts(request):
+    # Filtrame los usuarios que yo les envie dinero, y todos aquellos des lo que recibi dinero
+    contactos = Users.objects.filter(
+        Q(id__in=Transactions.objects.filter(remitente=request.user).values('destinatario')) | 
+        Q(id__in=Transactions.objects.filter(destinatario=request.user).values('remitente'))
+    )
+    context = {
+        "contactos": contactos
+    }
+    
+    return render(request, "contacts.html", context)
+
+
+"""
+Si Mark Zuckerberg, por ejemplo, cumple con alguna de las dos condiciones 
+(por ejemplo, si te envió dinero o si tú le enviaste dinero), entonces esa transacción 
+se aplicaría para él en el conjunto de resultados. Como estás usando OR (condición compuesta),
+si alguna de las condiciones es verdadera para él, su perfil será incluido en el conjunto de contactos.
+"""

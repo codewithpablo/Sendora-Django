@@ -6,12 +6,6 @@ random.seed()
 
 
 
-# Configurar el locale para usar el formato deseado
-import locale
-locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')  # Cambia a un locale adecuado para tu sistema
-
-# Create your models here.
-
 
 class CorporateAccounts(models.Model):
     alias = models.CharField(max_length=50)

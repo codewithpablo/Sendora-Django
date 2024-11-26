@@ -31,3 +31,5 @@ def create_a_profile(sender, instance, created, **kwargs, ):
 
 # Conectamos la señal para crear el perfil    
 post_save.connect(create_a_profile, sender=Users)
+
+#Como decidi  no usar un archivo signals.py en Profiles y coloque las señales directamente en models.py, no es necesario importar en apps.py en el metodo ready()

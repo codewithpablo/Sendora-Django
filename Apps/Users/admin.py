@@ -3,9 +3,11 @@ from .models import Users
 
 
 # Creamos un método para mostrar los grupos
-def get_user_groups(obj):
+def get_user_groups(obj):#obj se refiere al usuario actual que se está mostrando.
     return ", ".join([group.name for group in obj.groups.all()])
-get_user_groups.short_description = 'Grupo asignado'  # Nombre de la columna
+
+
+get_user_groups.short_description = 'Grupo asignado'  #short_description: Este es un atributo especial que puedes asignar a un método en Django cuando se usa en el list_display del Django Admin
 
 
 # Personalizamos la vista del panel de administración para los usuarios

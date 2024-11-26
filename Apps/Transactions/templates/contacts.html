@@ -1,0 +1,56 @@
+{% extends 'left-sidebar.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block sidebar %}
+
+<div class="h-full overflow-y-scroll p-4 hideScrollbar">
+    <h4 class="text-center py-5 text-sm font-bold">Lista de usuarios involucrados en tus transacciones(enviadas y recibidas)</h4>
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for contacto in contactos %}
+      <div class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 p-4 flex flex-col items-center">
+         <!-- Imagen redonda -->
+
+         <div  class="w-24 h-24 rounded-full object-cover border-[5px] overflow-hidden
+         {% if contacto.sendoraaccounts in perfil.cuentas_favoritas.all %}
+           border-green-500
+        {% else %}
+            border-red-500
+         {% endif %}
+
+         ">
+                <img 
+                src="{{ contacto.profiles.foto_perfil.url }}" 
+                alt="{{ contacto.username }}" 
+                
+            >
+         </div>
+         
+         <!-- Información debajo de la imagen -->
+         <div class="text-center mt-4">
+            <!-- Nombre de usuario -->
+            <h3 class="text-lg font-semibold text-gray-800">{{ contacto.username }}</h3>
+            <!-- Detalles adicionales -->
+            <p class="text-sm text-gray-500">
+               Miembro desde el {{ contacto.date_joined|date:"d M Y" }}
+            </p>
+
+            <form action="{% url 'marcarcomofavorito' contacto.sendoraaccounts.id %}" method="POST" class="flex gap-1  justify-center py-5 items-start">
+                {% csrf_token %}
+                <button type="submit" class="flex  items-center bg-gray-700 rounded-xl px-[10px] py-[5px] text-white">
+                    {% if contacto.sendoraaccounts in perfil.cuentas_favoritas.all %}
+                        <span class="font-semibold text-[10px]">Desmarcar</span>
+                    {% else %}
+                        <span class="font-semibold text-[10px]">Marcar</span>
+                    {% endif %}
+                </button>
+            </form>
+         </div>
+        
+      </div>
+      {% endfor %}
+   </div>
+</div>
+
+{% endblock %}
