@@ -16,7 +16,7 @@ Sendora posee 4 tipos de funcionalidades principales:
     -Recibir dinero
     -Editar perfil propio
     -Ver comprobante de cada movimineto financiero
-    -Ver historial de transacciones recientes e historal completo
+    -Ver historial de transacciones recientes e historial completo
     -Ver historial de ingresos a su propia cuenta Sendora
 
 3) Funcionalidades para usuarios administradores
