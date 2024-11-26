@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-$q2z*=wzepa+hpxk^7mp8fo^$18++ln@)1ufnt@_um+61)@t4l
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'sendora.onrender.com'
+    'sendoracash.onrender.com'
 ]
 
 
